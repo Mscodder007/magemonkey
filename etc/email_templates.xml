@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="rma_general_rma_email_notifications_template" label="RMA Admin Notification" file="rma_general_rma_email_notifications_template.html" type="html" module="Magemonkey_RMA" area="frontend"/>
+    <template id="rma_general_rma_update_status_email_notifications" label="RMA Update Status Notification" file="rma_update_email_notifications_template.html" type="html" module="Magemonkey_RMA" area="frontend"/>
+</config>

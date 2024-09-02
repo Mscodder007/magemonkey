@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Magemonkey RMA Module
+ * 
+ * @author Magemonkeys Team
+ * @category Magemonkeys
+ * @package Magemonkey_RMA
+ * @description Magento 2 RMA Module by Magemonkey
+ * @email : <mailto:infomagmonkeys.com>
+ * @version 1.0.0
+ * @link https://www.magemonkeys.com
+ * @copyright Copyright (c) 2023 Magemonkeys (https://www.magemonkeys.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Magemonkey::top_level" title="Return Management" module="Magemonkey_RMA" sortOrder="40" resource="Magento_Backend::content" parent="Magento_Sales::sales"/>
+		<add id="Magemonkey_RMA::magemonkey_rma_rma" title="Return Manage" module="Magemonkey_RMA" sortOrder="1" resource="Magento_Backend::content" parent="Magemonkey::top_level" action="magemonkey_rma/rma/index"/>
+        <add id="Magemonkey_RMA::fastorder_configuration" 
+            title="Configuration" 
+            module="Magemonkey_RMA" sortOrder="150" 
+            action="adminhtml/system_config/edit/section/rma"
+            resource="Magemonkey_RMA::quote_config" 
+            parent="Magemonkey::top_level"/>
+	</menu>
+</config>

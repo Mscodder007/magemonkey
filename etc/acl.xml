@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Magemonkey_RMA::Rma" title="Rma" sortOrder="10">
+					<resource id="Magemonkey_RMA::Rma_save" title="Save Rma" sortOrder="10"/>
+					<resource id="Magemonkey_RMA::Rma_delete" title="Delete Rma" sortOrder="20"/>
+					<resource id="Magemonkey_RMA::Rma_update" title="Update Rma" sortOrder="30"/>
+					<resource id="Magemonkey_RMA::Rma_view" title="View Rma" sortOrder="40"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

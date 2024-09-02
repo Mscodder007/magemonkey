@@ -1,0 +1,215 @@
+<?php
+/**
+ * Magemonkey_RMA PHTML Template
+ *
+ * @category    Magemonkey
+ * @package     Magemonkey_RMA
+ * @subpackage  View/frontend/templates
+ * @author      Anurag chitnis<anurag@webtechsystem.com>
+ */
+
+/** var $block Magemonkey\RMA\Block\Account\Index */
+$items = $block->getRmaItems();
+$token = $block->getToken();
+$data = json_encode($block->getReasons());
+$datastatus = json_encode($block->getRmaStatus());
+
+?>
+<div>
+    <div class="product-search-container table-wrapper orders-history">
+        <input type="text" id="search-input" placeholder="Search for products">
+        <div class="product-search-results"></div>
+    </div>
+    <form id="rma-form" method="post" enctype="multipart/form-data" action="<?= $block->getUrl("mm_rma/account/add") ?>">
+        <div class="product_form_table table-wrapper">
+            <input type="hidden" name="form_key" value="<?php echo $block->getFormKey(); ?>" />
+            <table id="product-form" class="data table table-order-items history">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col product-image">
+                            <span><?= $block->escapeHtml("Product") ?></span>
+                        </th>
+                        <th scope="col" class="col product-details">
+                            <span><?= $block->escapeHtml("Name") ?></span>
+                        </th>
+                        <th scope="col" class="col product-qty">
+                            <span><?= $block->escapeHtml("Qty") ?></span>
+                        </th>
+                        <th scope="col" class="col product-curr-price">
+                            <span><?= $block->escapeHtml(
+                                "Supporting Media"
+                            ) ?></span>
+                        </th>
+                        <th scope="col" class="col product-curr-price">
+                            <span><?= $block->escapeHtml("Reason") ?></span>
+                        </th>
+                        <th scope="col" class="col product-curr-price">
+                            <span><?= $block->escapeHtml("Status") ?></span>
+                        </th>
+                        <th scope="col" class="col product-curr-price">
+                            <span><?= $block->escapeHtml(
+                                "Order Id"
+                            ) ?></span>
+                        </th>
+                        <th scope="col" class="col product-curr-price">
+                            <span><?= $block->escapeHtml(
+                                "Action"
+                            ) ?></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($items)): ?>
+                    <?php foreach ($items as $item): ?>
+                            <tr>
+                                <td data-th="Product" class="col image"><img src="<?= $block->getImage($item->getProductId()) ?>"></td>
+                                <td data-th="Name" class="col name"><?= $block->getItemName($item->getProductId()) ?>
+                                    <input type="hidden" name="rma_id" value="<?= $item->getRmaId() ?>">
+                                    <input type="hidden" name="entity_id[]" value="<?= $item->getId() ?>">
+                                </td>
+                                <td data-th="Qty" class="col qty"><input type="text" name="qty[<?= $item->getId()?>]]" value="<?= $item->getQty() ?>"></td>
+                                <td data-th="Media" class="col media">
+                                    <input type="file" name="support_media[<?= $item->getId()?>][]"  multiple="multiple" value="">
+                                    <a href="#" class="imageviewer" data-itemid="<?= $item->getId(); ?>">  <?php echo __("View Images"); ?></a>                                   
+                                </td>
+
+                                <td data-th="Reason" class="col reason">
+                                    <select name="reason[<?= $item->getId()?>]">
+
+                                        <?php foreach($block->getReasons() as $reason):?>
+                                            <?php if($reason == $item->getReason()) {?>
+                                                <option selected value="<?= $reason ?>"><?= $reason ?> </option>
+                                                <?php } else { ?>
+                                                    <option value="<?= $reason ?>"><?= $reason ?> </option>
+                                                <?php }?>
+
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                                <td data-th="status" class="col status">
+                                    <?= $item->getStatus() ?>
+                                </td>
+
+                                <td data-th="OrderId" class="col order_id"><input type="text" name="order_id[<?= $item->getId()?>]" value="<?= $item->getOrderId() ?>"></td>
+                                <?php /*<td data-th="Status" class="col status"><input type="text" name="status[<?= $item->getId()?>]" value="<?= $item->getStatus() ?>"></td>*/?>
+                                <td data-th="Action" class="col action" >
+                                    <a href="<?= $block->getUrl('mm_rma/account/deleteItem',['id'=> $item->getId()])?>" data-list-id ="" class="delete-row">
+                                        <?php echo __("Delete Item"); ?>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+              </tbody>
+            </table>
+            <div class="rma-imgbox" style="display:none;"></div>
+        </div>
+            <button type="submit" class="action primary submit_rma"><?= __("Submit Return Request") ?></button>
+    </form>
+</div>
+    <style type="text/css">
+.search-poup-container {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 89.8%;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    z-index: 9999;
+    margin-left: 10px;
+    margin-top: -12px;
+}
+
+.requisition_product_details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.product-details_image {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
+
+.product-details {
+  flex-grow: 1;
+  display: grid;
+}
+
+.product_name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.product_sku {
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.product_price {
+  color: green;
+}
+a.requisition_selected {
+    display: flex;
+}
+
+.message-success{margin: 10px 0;padding: 10px;border-radius: 3px 3px 3px 3px; color: #270;
+  background-color: #DFF2BF;}
+.message-error{margin: 10px 0;padding: 10px;border-radius: 3px 3px 3px 3px;color: #D8000C;
+  background-color: #FFBABA;}
+</style>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magemonkey_RMA/js/view/product": {
+                "reasons":"<?= $block->escapeJs($data); ?>",
+                "status":"<?= $block->escapeJs($datastatus); ?>",
+                "token":"<?= $block->escapeJs($token); ?>"
+            }
+        }
+    }
+</script>
+<script type="text/javascript">
+   require(["jquery","mage/url",'fancybox'],function($,urlBuilder,fancybox) {
+      $(document).ready(function() {
+       
+         $(document).on('click','.imageviewer',function(){
+            let rmaItemId = $(this).attr('data-itemid');
+            let rmaurl = "<?php echo $this->getUrl('mm_rma/account/getrmaitemimage'); ?>";
+            $.ajax({
+             url: rmaurl,
+             type: 'POST',
+             dataType: 'json',
+             showLoader:true,
+             data: {rma_item_id:rmaItemId},
+            success: function(response) {
+               $('.rma-imgbox').html(response.html);
+               $('.rma-image-view').fancybox({
+                  buttons : [ 
+                   'slideShow',
+                   'share',
+                   'zoom',
+                   'fullScreen',
+                    "thumbs",
+                   'close'
+                  ],
+                  transitionIn: 'fade',
+                  transitionOut: 'fade',
+                  speed: 500,
+                  closeClick  : false,
+                  helpers     : { 
+                       overlay : {closeClick: false}
+                  }
+
+               }).trigger('click');
+            },
+            error: function (xhr, status, errorThrown) {
+               console.log(errorThrown);
+             }
+            });
+         });
+      });
+   });
+</script>

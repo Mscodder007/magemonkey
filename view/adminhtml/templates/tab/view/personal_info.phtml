@@ -1,0 +1,77 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Adminhtml\Edit\Tab\View\PersonalInfo $block */
+
+$items = $block->getRmaData();
+$customerData = $block->getCustomerData($items['customer_id']);
+$salesRepData = $block->getsalesRepData($items['salesrep_id']);
+
+
+$allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub', 'sup', 'ul'];
+?>
+<div class="fieldset-wrapper customer-information">
+    <table class="admin__table-secondary">
+        <tbody>
+            <tr>
+                <th><?= $block->escapeHtml(__('Status')) ?></th>
+                <td>
+                    <?php
+                    $status = $items['status'];
+                    switch ($status) {
+                        case 0:
+                            echo 'Pending';
+                            break;
+                        case 1:
+                            echo 'Fully Approved';
+                            break;
+                        case 2:
+                            echo 'Rejected';
+                            break;
+                        case 3:
+                            echo 'Partially Approved';
+                            break;
+                        default:
+                            echo 'Pending';
+                    }
+                    ?>  
+                </td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('RMA ID')) ?></th>
+                <td><?php echo $items['entity_id'] ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Customer Name')) ?></th>
+                <td><?= $customerData ? $customerData->getName() : '' ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Customer Email')) ?></th>
+                <td><?= $customerData ? $customerData->getEmail() : '' ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('SalesRep Name')) ?></th>
+                <td><?= $salesRepData ? $salesRepData->getName() : '' ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('SalesRep Email')) ?></th>
+                <td><?= $salesRepData ? $salesRepData->getEmail() :'' ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('SalesRep Telephone')) ?></th>
+                <td><?= $salesRepData ? $salesRepData->getTelephone() : '' ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Creatd By')) ?></th>
+                <td><?php echo $items['created_by'] == '1' ? 'customer ('.$customerData->getName().')' : 'SalesRep ('.$salesRepData->getName().')'  ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Creatd At')) ?></th>
+                <td><?php echo $items['created_at'] ?></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

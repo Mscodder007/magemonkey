@@ -1,0 +1,61 @@
+<?php
+/**
+ * Magemonkey_RMA PHTML Template
+ *
+ * @category    Magemonkey
+ * @package     Magemonkey_RMA
+ * @subpackage  View/frontend/templates
+ * @author      Anurag chitnis<anurag@webtechsystem.com>
+ */
+
+$items = $block->getRmaCollection();
+?>
+
+
+<a href="<?= $block->getBaseUrl().'mm_rma/account/index'?>" class="action primary generate_rma"><?= __('Generate Return Request') ?></a>
+ <div class="table-wrapper orders-history ">
+
+            <table class="data table table-order-items history" id="rma-table">
+                <caption class="table-caption"><?= __($block->escapeHtml('Return Request List')) ?></caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="col name"><?= $block->escapeHtml('ID') ?></th>
+                        <th scope="col" class="col item"><?= $block->escapeHtml('Customer Name') ?></th>
+                        <th scope="col" class="col create_date"><?= $block->escapeHtml('Create Date') ?></th>
+                        <th scope="col" class="col update_date"><?= $block->escapeHtml('Status') ?></th>
+                        <th scope="col" class="col action"><?= $block->escapeHtml('Actions') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <?php foreach ($items as $item): ?>
+                    <tr>
+                        <td data-th="Name" class="col name"><?=  $item->getId()?></td>
+                        <td data-th="Items" class="col item"><?= $block->getCustomerName() ?></td>
+                        <td data-th="Create Date" class="col create_date"><?= $item->getCreatedAt() ?></td>
+                        <td data-th="Update Update" class="col update_date"><?=  $block->getStatus($item->getStatus())?></td>
+                        <td data-th="Action" class="col action" >
+                            <a href="<?= $block->getUrl('mm_rma/account/index/',['id'=> $item->getId()]); ?>" data-list-id ="" class="add-cart" id="add-to-cart">
+                                 <?php echo __('View'); ?>
+                                 <input type="hidden"  value= ""/>
+                            </a>
+                       </td>
+
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <script>
+        require([
+            'jquery',
+            'Magemonkey_RMA/js/jquery.dataTables.min'
+             ], function($, $t){
+                $(document).ready(function() {
+                 $('#rma-table').DataTable({
+                    "lengthMenu": [ [2, 4, 8, -1], [2, 4, 8, "All"] ],
+                    "pageLength": 4,
+                 });
+              });
+        })
+</script>

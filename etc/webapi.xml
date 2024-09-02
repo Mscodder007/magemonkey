@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route url="/V1/magemonkey-rma/rma" method="POST">
+		<service class="Magemonkey\RMA\Api\RmaRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Magemonkey_RMA::Rma_save"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rma/search" method="GET">
+		<service class="Magemonkey\RMA\Api\RmaRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="Magemonkey_RMA::Rma_view"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rma/:rmaId" method="GET">
+		<service class="Magemonkey\RMA\Api\RmaRepositoryInterface" method="get"/>
+		<resources>
+			<resource ref="Magemonkey_RMA::Rma_view"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rma/:rmaId" method="PUT">
+		<service class="Magemonkey\RMA\Api\RmaRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Magemonkey_RMA::Rma_update"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rma/:rmaId" method="DELETE">
+		<service class="Magemonkey\RMA\Api\RmaRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="Magemonkey_RMA::Rma_delete"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rmaList" method="POST">
+		<service class="Magemonkey\RMA\Api\RmaAppInterface" method="RmaList"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rmaItemsList/:rmaId" method="GET">
+		<service class="Magemonkey\RMA\Api\RmaAppInterface" method="RmaItemList"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rma-app/:rmaId" method="DELETE">
+		<service class="Magemonkey\RMA\Api\RmaAppInterface" method="delete"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rma/add" method="POST">
+		<service class="Magemonkey\RMA\Api\RmaAppInterface" method="save"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route url="/V1/magemonkey-rma/rma/upload/image" method="POST">
+		<service class="Magemonkey\RMA\Api\RmaAppInterface" method="upload"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+</routes>

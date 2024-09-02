@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+	<head>
+		<css src="Magemonkey_RMA::css/style.css"/>
+  	</head>
+	<body>
+		<referenceContainer name="content">
+			<block name="account.list.rma" class="Magemonkey\RMA\Block\Account\RmaList" template="Magemonkey_RMA::account/list.phtml"/>
+			
+		</referenceContainer>
+	</body>
+</page>

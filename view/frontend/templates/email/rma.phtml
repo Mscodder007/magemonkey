@@ -1,0 +1,99 @@
+<?php
+
+$data=$block->getData('rma');
+$array = (array) $data;
+$array = (array) $array;
+$quoteid ='';
+?>
+
+<table style="border-collapse:collapse">
+
+    <tbody><tr class="m_-6910369700095941472email-summary">
+        <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top">
+            <h1 style="font-weight:300;line-height:1.1;font-size:26px;margin-top:0;border-bottom:1px solid #cccccc;margin-bottom:10px;padding-bottom:10px">Return Request</h1>
+        </td>
+    </tr>
+    <tr>
+        <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top">
+            <table style="border-collapse:collapse;width:100%">
+                <tbody>
+<?php
+foreach ($array as $key => $value) {
+    foreach ($value as $key => $valuee) {
+?>
+
+<?php  if( $key=='rmaNo' ) {
+$quoteid = $valuee;
+?>
+    <tr>
+    <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;text-align:left;width:100%;font-weight:bold" align="center">RMA No:</td>
+    <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;padding-left:5px;text-align:left;width:100%" align="center"><?php echo $valuee ?></td>
+    </tr>
+    <tr>
+    <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;text-align:left;width:100%;font-weight:bold" align="center"></td>
+    <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;padding-left:5px;text-align:left;width:100%" align="center">A new return request has been placed by the customer.</td>
+    </tr>
+
+
+<?php } else if( $key=='customerName' ) { ?>
+
+    <tr>
+        <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;text-align:left;width:100%;font-weight:bold" align="center">Customer Name:</td>
+        <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;padding-left:5px;text-align:left;width:100%" align="center"><?php echo $valuee ?></td>
+    </tr>
+
+<?php } else if( $key=='customerEmail' ) { ?>
+
+    <tr>
+        <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;text-align:left;width:100%;font-weight:bold" align="center">Customer Email:</td>
+        <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;padding-left:5px;text-align:left;width:100%" align="center"><?php echo $valuee ?></td>
+    </tr>
+
+<?php } else if( $key=='storeName' ) { ?>
+
+    <tr>
+        <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;text-align:left;width:100%;font-weight:bold" align="center">From Store:</td>
+        <td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;background-color:#fdf0d5;border:1px solid false;color:#333333;margin:0;padding:10px;padding-left:5px;text-align:left;width:100%" align="center"><?php echo $valuee ?></td>
+    </tr>
+
+<?php } else  {
+
+// $CustomFields=$block->getRfqCustomFields($quoteid);
+// $CustomFields=json_decode($CustomFields);
+// $CustomFields = (array) $CustomFields;
+// $CustomFields = (array) $CustomFields;
+
+// foreach ($CustomFields as $key => $CustomField ) {
+// $CustomField = (array) $CustomField;
+?>
+
+
+<?php //} ?>
+<?php } ?>
+
+
+<?php
+    }
+}
+?>
+
+</tbody>
+        </table>
+                </td>
+            </tr>
+
+             <table style="border-collapse: collapse; width: 100%;">
+                <tbody>
+                    <tr>
+                        <td
+                            style="font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; vertical-align: top; background-color: #fdf0d5; border: 1px solid false; color: #333333; margin: 0; padding: 10px; text-align: left;"
+                            align="center"
+                        >
+                            Thank you
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+</tbody>
+</table>
+<?php ?>

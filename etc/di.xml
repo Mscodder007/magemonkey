@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Magemonkey\RMA\Api\RmaRepositoryInterface" type="Magemonkey\RMA\Model\RmaRepository"/>
+	<preference for="Magemonkey\RMA\Api\Data\RmaInterface" type="Magemonkey\RMA\Model\Rma"/>
+	<preference for="Magemonkey\RMA\Api\Data\RmaSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+   <virtualType name="RmaFiterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="RmaFiterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Magemonkey\RMA\Model\ResourceModel\Rma\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">RmaFiterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magemonkey\RMA\Model\ResourceModel\Rma\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magemonkey_rma</argument>
+			 <argument name="eventPrefix" xsi:type="string">rma_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magemonkey\RMA\Model\ResourceModel\Rma</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="rma_listing_data_source" xsi:type="string">Magemonkey\RMA\Model\ResourceModel\Rma\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="Magemonkey\RMA\Api\RmaAppInterface" type="Magemonkey\RMA\Model\Api\RmaApp"/>
+</config>

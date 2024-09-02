@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magemonkey RMA Module
+ * 
+ * @author Magemonkeys Team
+ * @category Magemonkeys
+ * @package Magemonkey_RMA
+ * @description Magento 2 RMA Module by Magemonkey
+ * @email : <mailto:infomagmonkeys.com>
+ * @version 1.0.0
+ * @link https://www.magemonkeys.com
+ * @copyright Copyright (c) 2023 Magemonkeys (https://www.magemonkeys.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="rma" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Return Management</label>
+            <tab>magemonkey</tab>
+            <resource>Magemonkey_RequestQuote::quote_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="99" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Admin Email Notifications</label>
+                <field id="admin_email" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Notify </label>
+                </field>
+                <field id="rma_email_notifications_template" translate="label" type="select" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template for Submitted RMA</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="rma_update_status_email_notifications" translate="label" type="select" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template for RMA ITEM Update</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="rma_api_token" translate="label" type="obscure" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Secrete Token</label>
+                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+            </group>
+
+            <group id="rma_status" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Return Settings</label>
+                <field id="rma_product_status" translate="label comment tooltip" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Status</label>
+                    <frontend_model>Magemonkey\RMA\Block\Adminhtml\System\Config\Formfieldmap</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment>
+                        <![CDATA[Maximum 5 fields allowed]]>
+                    </comment>
+                </field>
+                <field id="rma_reasons" translate="label comment tooltip" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reasons</label>
+                    <frontend_model>Magemonkey\RMA\Block\Adminhtml\System\Config\Formfieldmap</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment>
+                        <![CDATA[Maximum 5 fields allowed]]>
+                    </comment>
+                </field>
+            </group>
+
+
+            <!-- <group id="admin_email_notifications" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Admin Email Notifications</label>
+
+                <field id="quote_admin_sendemail_to" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Email to</label>
+                    <comment>Leave Empty to Disable Notifications</comment>
+                    <validate>validate-email</validate>
+                </field>
+
+                <field id="quote_admin_emailnotification_sender" translate="label" type="select" sortOrder="350" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+
+                <field id="quote_admin_emailnotification_template" translate="label" type="select" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template for Submitted Quote</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+
+            <group id="customer_email_notifications" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Customer Email Notifications</label>
+
+                <field id="quote_customer_emailnotification_sender" translate="label" type="select" sortOrder="350" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+
+                <field id="quote_customer_submitted_template" translate="label" type="select" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template for Submitted Quote</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <field id="quote_customer_approved_template" translate="label" type="select" sortOrder="450" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template for Approved Quote</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <field id="quote_customer_canceled_template" translate="label" type="select" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template for Canceled Quote</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group> -->
+        </section>
+    </system>
+</config>

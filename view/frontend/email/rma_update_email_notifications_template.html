@@ -1,0 +1,11 @@
+<!--@subject RMA Update Status  @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p>{{trans "Hi "}} {{var customer_name}},</p>
+<p>
+{{trans "Status Updated for RMA Request ID Please check your account for more information."}}
+</p>
+
+{{var store.getFrontendName()}}
+{{template config_path="design/email/footer_template"}}

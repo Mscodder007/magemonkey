@@ -1,0 +1,30 @@
+
+<!--@subject  {{var data.subject}}  @-->
+{{template config_path="design/email/header_template"}}
+<table>
+
+    <tr class="email-summary">
+        <td>
+            <h1>Reply to Quote Request</h1>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>            
+            <table class="message-info">                
+                <tr>
+                                    
+                                   <td align="center" style="padding-left:5px;text-align:left;">Dear, {{var data.customerName}}</td>
+                </tr>
+                <tr>
+                                   <td align="center" style="text-align:left; font-weight:bold;">Thanks for contacting us. We have recieved your quote request. We'll respond to you as soon as possible.</td>
+         
+                </tr>
+ 
+            </table>            
+            
+            
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,139 @@
+<?php  
+   $items = $this->getRmaItemscollection();
+?>
+<div id="messages">
+
+</div>
+<div id="magento_rma_item_edit_grid" data-grid-id="magento_rma_item_edit_grid">
+   <div class="admin__data-grid-wrap admin__data-grid-wrap-static">
+      <table class="data-grid" id="magento_rma_item_edit_grid_table">
+         <thead>
+            <tr>
+               <th class="data-grid-th col-product no-link col-product_admin_name"><span><?= $block->escapeHtml(__('Product Name')) ?></span></th>
+               <th class="data-grid-th col-sku no-link col-product_admin_sku"><span><?= $block->escapeHtml(__('SKU')) ?></span></th>
+               <th class="data-grid-th col-qty no-link col-qty_requested"><span><?= $block->escapeHtml(__('Requested Qty')) ?></span></th>
+               <th class="data-grid-th col-reason no-link col-reason"><span><?= $block->escapeHtml(__('Return Reason')) ?></span></th>
+               <th class="data-grid-th col-product no-link col-product_admin_name"><span><?= $block->escapeHtml(__('Image')) ?></span></th>
+               <th class="data-grid-th col-reason no-link col-remark"><span><?= $block->escapeHtml(__('Remark')) ?></span></th>
+               <th class="data-grid-th col-actions no-link col-action"><span><span><?= $block->escapeHtml(__('Status')) ?></span></th>
+               <th class="data-grid-th col-actions no-link col-action"><span><span><?= $block->escapeHtml(__('Action')) ?></span></th>
+            </tr>
+         </thead>
+         <tbody>
+            <?php foreach ($items as $key => $item): ?>
+               <tr title="#" class="even _clickable">
+                  <?php $product = $block->getProductById($item->getProductId()); ?>
+                  <td class=" col-product col-product_admin_name">
+                     <?= $block->escapeHtml(__($product->getName())) ?> 
+                  </td>
+                  <td class=" col-sku col-product_admin_sku">
+                     <?= $block->escapeHtml(__($product->getSku())) ?> 
+                  </td>
+                  <td class=" col-qty col-qty_requested">
+                     <?= $block->escapeHtml(__($item->getQty())) ?>
+                  </td>
+                  <td class=" col-reason col-reason">
+                     <?= $block->escapeHtml(__($item->getReason())) ?> 
+                  </td>
+                  <td class=" col-image col-product_admin_name">
+                     <a href="#" class="imageviewer" data-itemid="<?= $item->getEntityId(); ?>">View Images</a>
+                  </td>
+                  <td class=" col-reason col-remark">
+                     <textarea cols="13" rows="3" name="rma_items_remark" class="rma_item_<?= $item->getEntityId()?>_remark" value= '<?= $item->getRemark(); ?>'><?= $item->getRemark(); ?></textarea> 
+                  </td>
+                  <td class=" col-status col-status">
+                     <select name="items_<?= $item->getEntityId()?>status" class="admin__control-select required-entry reason_<?= $item->getEntityId()?>_status">
+                        <option value=""></option>
+                        <option value="pending" <?= ($item->getstatus() == 'pending') ? 'selected="selected"' : '' ?>>Pending</option>
+                        <option value="approved" <?= ($item->getstatus() == 'approved') ? 'selected="selected"' : '' ?>>Approved</option>
+                        <option value="rejected" <?= ($item->getstatus() == 'rejected') ? 'selected="selected"' : '' ?>>Rejected</option>
+                     </select>
+                  </td>
+                  <td class=" col-reason col-action">
+                     <button id="update_rma" title="update" type="button" data-item-id='<?= $item->getEntityId()?>' data-rma-id = '<?= $item->getRmaId()?>'class="action- scalable save_rma primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text"><span>Update</span></span>
+                     </button> 
+                  </td>
+               </tr>
+            <?php endforeach ?>
+         </tbody>
+      </table>
+      <div class="rma-imgbox" style="display:none;">
+         
+      </div>
+   </div>
+</div>
+
+<!-- <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magemonkey_RMA/js/rmaitemupdate": {
+                    "rmaurl": "<?php //echo $this->getUrl('magemonkey_rma/rma/updateitem'); ?>",
+                }
+            }
+        }
+</script> -->
+<script type="text/javascript">
+   require(["jquery","mage/url",'fancybox'],function($,urlBuilder,fancybox) {
+      $(document).ready(function() {
+         $(document).on('click','.save_rma',function(){
+            let rmaId = $(this).attr('data-rma-id');
+            let rmaItemId = $(this).attr('data-item-id');
+            let status = $('.reason_'+rmaItemId+'_status').val();
+            let remark = $('.rma_item_'+rmaItemId+'_remark').val();
+            let rmaurl = "<?php echo $this->getUrl('magemonkey_rma/rma/updateitem'); ?>";
+            
+            $.ajax({
+             url: rmaurl,
+             type: 'POST',
+             dataType: 'json',
+             showLoader:true,
+             data: {rma_id:rmaId,rma_item_id:rmaItemId,status:status,remark:remark},
+            success: function(response) {
+               $('#messages').html('<div class="messages"><div class="message message-success success"><div class="succsess_msg">'+response.message+'</div></div></div>');
+               console.log('Response',response.message);
+            },
+            error: function (xhr, status, errorThrown) {
+               console.log(errorThrown);
+               $('#messages').html('<div class="messages"><div class="message message-error error"><div class="succsess_msg">something went wrong.</div></div></div>');  
+             }
+            });
+         });
+         $(document).on('click','.imageviewer',function(){
+            let rmaItemId = $(this).attr('data-itemid');
+            let rmaurl = "<?php echo $this->getUrl('magemonkey_rma/rma/getrmaitemimage'); ?>";
+            $.ajax({
+             url: rmaurl,
+             type: 'POST',
+             dataType: 'json',
+             showLoader:true,
+             data: {rma_item_id:rmaItemId},
+            success: function(response) {
+               $('.rma-imgbox').html(response.html);
+               $('.rma-image-view').fancybox({
+                  buttons : [ 
+                   'slideShow',
+                   'share',
+                   'zoom',
+                   'fullScreen',
+                    "thumbs",
+                   'close'
+                  ],
+                  transitionIn: 'fade',
+                  transitionOut: 'fade',
+                  speed: 500,
+                  closeClick  : false,
+                  helpers     : { 
+                       overlay : {closeClick: false}
+                  }
+
+               }).trigger('click');
+            },
+            error: function (xhr, status, errorThrown) {
+               console.log(errorThrown);
+             }
+            });
+         });
+      });
+   });
+</script>

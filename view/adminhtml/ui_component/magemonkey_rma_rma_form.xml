@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+   <argument name="data" xsi:type="array">
+      <item name="js_config" xsi:type="array">
+         <item name="provider" xsi:type="string">magemonkey_rma_rma_form.rma_form_data_source</item>
+         <item name="deps" xsi:type="string">magemonkey_rma_rma_form.rma_form_data_source</item>
+      </item>
+      <item name="label" xsi:type="string" translate="true">General Information</item>
+      <item name="config" xsi:type="array">
+         <item name="dataScope" xsi:type="string">data</item>
+         <item name="namespace" xsi:type="string">uiexample_form</item>
+      </item>
+      <item name="spinner" xsi:type="string">general_information</item>
+      <item name="buttons" xsi:type="array">
+         <item name="back" xsi:type="string">Magemonkey\RMA\Block\Adminhtml\Rma\Edit\BackButton</item>
+         <!-- <item name="reset" xsi:type="string">Magemonkey\RMA\Block\Adminhtml\Rma\Edit\SaveButton</item>
+         <item name="save" xsi:type="string">Magemonkey\RMA\Block\Adminhtml\Rma\Edit\SaveAndContinueButton</item> -->
+      </item>
+      <!-- <item name="template" xsi:type="string">templates/form/collapsible</item> -->
+   </argument>
+   <settings>
+    <layout>
+        <navContainerName>left</navContainerName>
+        <type>tabs</type>
+    </layout>
+    <dataScope>data</dataScope>
+    <deps>
+        <dep>magemonkey_rma_rma_form.rma_form_data_source</dep>
+    </deps>
+</settings>
+   <dataSource name="rma_form_data_source">
+      <argument name="dataProvider" xsi:type="configurableObject">
+         <argument name="class" xsi:type="string">Magemonkey\RMA\Model\Rma\DataProvider</argument>
+         <argument name="name" xsi:type="string">rma_form_data_source</argument>
+         <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+         <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+         <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+               <item name="submit_url" xsi:type="url" path="*/*/save" />
+            </item>
+         </argument>
+      </argument>
+      <argument name="data" xsi:type="array">
+         <item name="js_config" xsi:type="array">
+            <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+         </item>
+      </argument>
+   </dataSource>
+   <fieldset name="general_information">      
+      <argument name="data" xsi:type="array">
+         <item name="config" xsi:type="array">
+            <item name="collapsible" xsi:type="boolean">false</item>
+            <item name="label" xsi:type="string" translate="true">General Information</item>
+            <item name="sortOrder" xsi:type="number">20</item>
+         </item>
+      </argument>
+	   <htmlContent name="rma_edit_tab_view_content">
+        <block class="Magemonkey\RMA\Block\Adminhtml\Rma\Edit\Tab\View" name="rma_edit_tab_view" template="Magemonkey_RMA::tab/view.phtml">
+            <arguments>
+                <argument name="sort_order" xsi:type="number">10</argument>
+                <argument name="tab_label" xsi:type="string" translate="true">RMA Details</argument>
+            </arguments>
+            <block class="Magemonkey\RMA\Block\Adminhtml\Rma\Edit\Tab\View\PersonalInfo" name="rma_personal_info" template="Magemonkey_RMA::tab/view/personal_info.phtml"/>
+        </block>
+    </htmlContent>
+   </fieldset>
+   <fieldset name="rma_item">
+      <argument name="data" xsi:type="array">
+         <item name="config" xsi:type="array">
+            <item name="collapsible" xsi:type="boolean">false</item>
+            <item name="label" xsi:type="string" translate="true">Return Items</item>
+            <item name="sortOrder" xsi:type="number">30</item>
+         </item>
+      </argument>
+      <htmlContent name="rma_edit_tab_view_rma_items_content">
+         <block class="Magemonkey\RMA\Block\Adminhtml\Rma\Edit\Tab\View" name="rma_edit_tab_view_rma" template="Magemonkey_RMA::tab/view.phtml">
+            <arguments>
+                <argument name="sort_order" xsi:type="number">20</argument>
+                <argument name="tab_label" xsi:type="string" translate="true">RMA Details</argument>
+            </arguments>
+            <block class="Magemonkey\RMA\Block\Adminhtml\Rma\RmaItems" name="rma_items_info" template="Magemonkey_RMA::tab/view/rma_items.phtml"/>
+         </block>
+    </htmlContent>
+   </fieldset>
+</form>
