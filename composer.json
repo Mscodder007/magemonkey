@@ -18,6 +18,17 @@
       "Magemonkey\\RMA\\": ""
     }
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./",
+      "options": {
+        "symlink": false
+      }
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "map": [
       [
